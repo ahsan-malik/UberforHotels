@@ -77,7 +77,6 @@ public class UserSignupActivity extends AppCompatActivity {
         final String userName = name.getText().toString().trim();
         final String mail = email.getText().toString().trim();
         String pswrd = password.getText().toString().trim();
-
         db.child("Users").child(phoneNo).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
