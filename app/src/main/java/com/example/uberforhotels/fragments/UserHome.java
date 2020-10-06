@@ -57,7 +57,7 @@ public class UserHome extends Fragment {
                     hotels.add(dataSnapshot.getValue(Hotel.class));
 
                 featureRecyclerView.setAdapter(new UserHomeAdapter(hotels, false));
-                //allHotelRecyclerView.setAdapter(new UserHomeAdapter(hotels, true));
+                allHotelRecyclerView.setAdapter(new UserHomeAdapter(hotels, true));
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
