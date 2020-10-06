@@ -18,6 +18,6 @@ public class SplashActivity extends AppCompatActivity {
         handler.postDelayed(() -> {
             Helper.LounchActivity(SplashActivity.this, MainActivity.class);
             finish();
-        }, 2000);
+        }, 1000);
     }
 }

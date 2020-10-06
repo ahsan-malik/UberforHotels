@@ -28,7 +28,7 @@
         <activity
             android:name=".UserProfileActivity"
             android:label="@string/title_activity_user_profile"
-            android:theme="@style/AppTheme.ActionBar.Transparent" >
+            android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity android:name=".auth.LoginActivity" />
         <activity android:name=".auth.HotelSignupActivity" />

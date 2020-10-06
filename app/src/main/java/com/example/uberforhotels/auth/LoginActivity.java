@@ -70,11 +70,13 @@ public class LoginActivity extends AppCompatActivity {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                         User user = snapshot.getValue(User.class);
                         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-                            assert user != null;
-                            UserPrefs.saveUserState(user, getApplicationContext());
-                            prefs.edit().putBoolean("isHotel", false).apply();
-                            Helper.LounchActivity(LoginActivity.this, UserProfileActivity.class);
-                            finish();
+                            if (task.isSuccessful()) {
+                                assert user != null;
+                                UserPrefs.saveUserState(user, getApplicationContext());
+                                prefs.edit().putBoolean("isHotel", false).apply();
+                                Helper.LounchActivity(LoginActivity.this, UserProfileActivity.class);
+                                finish();
+                            }
                         }).addOnFailureListener(e -> {
                             Helper.toast(getApplicationContext(), e.getMessage());
                             loader.setVisibility(View.INVISIBLE);
@@ -105,18 +107,21 @@ public class LoginActivity extends AppCompatActivity {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         Hotel hotel = dataSnapshot.getValue(Hotel.class);
                         FirebaseAuth.getInstance().signInWithEmailAndPassword(mail, password).addOnCompleteListener(task -> {
-                            assert hotel != null;
-                            prefs.edit().putBoolean("isHotel", true).apply();
-                            prefs.edit().putString("hotel_id", hotel.getId()).apply();
-                            prefs.edit().putString("hotel_name", hotel.getHotel_name()).apply();
-                            if(hotel.getAddress() != null) prefs.edit().putString("hotel_city", hotel.getAddress().getCity()).apply();
-                            else prefs.edit().putString("hotel_city", "not set").apply();
-                            Helper.setHotelMailInPrefs(mail, getApplicationContext());
-                            Helper.setPrefsCoverImgUrl(hotel.getImageUrl(), LoginActivity.this);
+                            if (task.isSuccessful()) {
+                                assert hotel != null;
+                                prefs.edit().putBoolean("isHotel", true).apply();
+                                prefs.edit().putString("hotel_id", hotel.getId()).apply();
+                                prefs.edit().putString("hotel_name", hotel.getHotel_name()).apply();
+                                if (hotel.getAddress() != null)
+                                    prefs.edit().putString("hotel_city", hotel.getAddress().getCity()).apply();
+                                else prefs.edit().putString("hotel_city", "not set").apply();
+                                Helper.setHotelMailInPrefs(mail, getApplicationContext());
+                                Helper.setPrefsCoverImgUrl(hotel.getImageUrl(), LoginActivity.this);
 
-                            Helper.LounchActivity(LoginActivity.this, HotelProfileActivity.class);
-                            finish();
-                            //DBHelper.getCoverImageUrlFromDB(LoginActivity.this);
+                                Helper.LounchActivity(LoginActivity.this, HotelProfileActivity.class);
+                                finish();
+                                //DBHelper.getCoverImageUrlFromDB(LoginActivity.this);
+                            }
                         }).addOnFailureListener(e -> Helper.toast(getApplicationContext(), e.getMessage()));
                     }
                 } else{
