@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="@color/whitecolor"
+    tools:context=".SplashActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/hotel_icon"
+        />
+
+    <com.agrawalsuneet.dotsloader.loaders.LazyLoader
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:layout_marginTop="20dp"
+        app:lazyloader_animDur="800"
+        app:lazyloader_dotsDist="10dp"
+        app:lazyloader_dotsRadius="10dp"
+        app:lazyloader_firstDelayDur="150"
+        app:lazyloader_firstDotColor="@color/colorPrimary"
+        app:lazyloader_interpolator="@android:anim/decelerate_interpolator"
+        app:lazyloader_secondDelayDur="300"
+        app:lazyloader_secondDotColor="@color/colorAccent"
+        app:lazyloader_thirdDotColor="@color/colorPrimaryDark" />
+
+</LinearLayout>

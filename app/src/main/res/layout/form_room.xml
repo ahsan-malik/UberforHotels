@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="20dp"
+    android:paddingHorizontal="10dp"
+    android:layout_gravity="center"
+    android:elevation="5dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Adding Room"
+        android:textSize="28sp"
+        android:textStyle="bold"/>
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_80sdp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:src="@drawable/hotelimg"
+        android:scaleType="centerCrop"/>
+
+    <!--ID -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/room_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:counterEnabled="true"
+        app:counterMaxLength="4"
+        app:errorEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Room ID"
+            android:inputType="number"
+            android:maxLength="4"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- rent -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/rent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Rent"
+            android:inputType="number"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!--bed -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/beds"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        app:counterMaxLength="1"
+        app:counterEnabled="true"
+        app:errorEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Numbers of Beds"
+            android:inputType="number"
+            android:maxLength="1"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- check boxes -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:paddingHorizontal="@dimen/_10sdp"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+       <CheckBox
+           android:id="@+id/wifi"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="Wifi"
+           android:letterSpacing="0.05"/>
+        <CheckBox
+            android:id="@+id/available"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Availability"
+            android:letterSpacing="0.05"/>
+
+    </LinearLayout>
+
+    <!-- buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_25sdp"
+        android:paddingHorizontal="@dimen/_10sdp"
+        android:orientation="horizontal"
+        android:gravity="right">
+
+        <TextView
+            android:id="@+id/cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_10sdp"
+            android:text="Cancel"
+            android:textSize="@dimen/_14sdp"
+            android:textColor="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/add_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_10sdp"
+            android:text="Add"
+            android:textSize="@dimen/_14sdp"
+            android:textColor="@color/colorPrimary" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

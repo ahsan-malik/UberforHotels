@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/card"
+    android:layout_margin="@dimen/_5sdp"
+    android:elevation="@dimen/_5sdp">
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_80sdp"
+        android:src="@drawable/hotelimg"
+        android:scaleType="centerCrop"/>
+
+    <TextView
+        android:id="@+id/text_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:layout_toRightOf="@+id/img"
+        android:fontFamily="@font/abril_fatface"
+        android:text="Room-0021"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/av_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_5sdp"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_baseline_check_12"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/_5sdp"
+        android:text="Availability:"
+        android:textSize="10sp"
+        android:layout_toStartOf="@id/av_img"/>
+
+    <TextView
+        android:id="@+id/wifiText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_id"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_toRightOf="@id/img"
+        android:letterSpacing="0.02"
+        android:text="Internet:"
+        android:textSize="@dimen/_12sdp" />
+
+    <ImageView
+        android:id="@+id/wifiImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:src="@drawable/ic_baseline_wifi_off_12"
+        android:layout_toRightOf="@id/wifiText"
+        android:layout_alignBottom="@id/wifiText"/>
+
+    <ImageView
+        android:id="@+id/bedImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_king_bed_12"
+        android:layout_toEndOf="@+id/wifiImg"
+        android:layout_alignBottom="@+id/wifiImg"
+        android:layout_marginLeft="@dimen/_40sdp"/>
+
+    <TextView
+        android:id="@+id/bedText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" : 2"
+        android:paddingBottom="@dimen/_2sdp"
+        android:textSize="@dimen/_12sdp"
+        android:layout_toEndOf="@+id/bedImg"
+        android:layout_alignBottom="@+id/bedImg"/>
+
+    <TextView
+        android:id="@+id/rent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/img"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:fontFamily="cursive"
+        android:text="Rs 2400"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold" />
+
+</RelativeLayout>
