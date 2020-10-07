@@ -23,6 +23,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -58,12 +59,17 @@ public class DBHelper {
     }
 
     public static void addAddress(Address address, Context context){
-        String uid = Helper.getHotelIdFromPreference(context);
-        db.child("Hotels").child(uid).child("address").setValue(address).addOnSuccessListener(aVoid -> {
-            prefs = PreferenceManager.getDefaultSharedPreferences(context);
-            prefs.edit().putString("hotel_city", address.getCity()).apply();
-        }).addOnFailureListener(e -> Helper.toast(context, e.getMessage()));
-
+        if(Helper.isHotel(context)) {
+            db.child("Hotels").child(Helper.getHotelIdFromPreference(context)).child("address").setValue(address).addOnSuccessListener(aVoid -> {
+                prefs = PreferenceManager.getDefaultSharedPreferences(context);
+                prefs.edit().putString("hotel_city", address.getCity()).apply();
+            }).addOnFailureListener(e -> Helper.toast(context, e.getMessage()));
+        }
+        else {
+            db.child("Users").child(UserPrefs.getPhoneNumber(context)).child("address").setValue(address).addOnSuccessListener(aVoid -> {
+                Helper.toast(context, "address updated");
+            }).addOnFailureListener(e -> Helper.toast(context, e.getMessage()));
+        }
     }
 
     public static void addRoom(Room room, Context context){

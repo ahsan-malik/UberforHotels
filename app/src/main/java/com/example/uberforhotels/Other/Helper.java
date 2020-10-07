@@ -27,6 +27,11 @@ public class Helper {
         return prefs.getString("hotel_id", "DEFAULT");
     }
 
+    public static boolean isHotel(Context context){
+        prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean("isHotel", false);
+    }
+
     public static void setHotelNameInPrefs(String name, Context context){
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
         prefs.edit().putString("hotel_name", name).apply();

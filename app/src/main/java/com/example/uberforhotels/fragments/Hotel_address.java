@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.example.uberforhotels.Other.DBHelper;
 import com.example.uberforhotels.Other.Helper;
+import com.example.uberforhotels.Other.UserPrefs;
 import com.example.uberforhotels.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -31,6 +32,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
@@ -45,6 +47,7 @@ public class Hotel_address extends Fragment implements OnMapReadyCallback {
     ImageView sheetArrowImage;
 
     com.example.uberforhotels.models.Address hotel_address;
+    DatabaseReference db;
 
     MarkerOptions markerOptions;
     Marker marker;
@@ -64,6 +67,7 @@ public class Hotel_address extends Fragment implements OnMapReadyCallback {
         mapFragment.getMapAsync(this);
 
         hotel_address = new com.example.uberforhotels.models.Address();
+        db = FirebaseDatabase.getInstance().getReference();
 
         searchView = view.findViewById(R.id.search_bar);
         bottomSheetLayout = view.findViewById(R.id.bottom_sheet);
@@ -86,26 +90,11 @@ public class Hotel_address extends Fragment implements OnMapReadyCallback {
         sheetButton = bottomSheetLayout.findViewById(R.id.save_btn);
         sheetArrowImage = bottomSheetLayout.findViewById(R.id.arrow_img);
 
-        final String uid = Helper.getHotelIdFromPreference(getContext());
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        reference.child("Hotels").child(uid).child("address").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
-                    hotel_address = dataSnapshot.getValue(com.example.uberforhotels.models.Address.class);
-                    placeMarker(new LatLng(hotel_address.getLat(), hotel_address.getLng()));
-                }else{
-                    placeMarker(position);
-                }
-            }
+        getAddressFromDB();
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Helper.toast(getContext(), databaseError.toString());
-            }
+        sheetButton.setOnClickListener(view -> {
+            DBHelper.addAddress(hotel_address, getContext());
         });
-
-        sheetButton.setOnClickListener(view -> DBHelper.addAddress(hotel_address, getContext()));
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -121,7 +110,6 @@ public class Hotel_address extends Fragment implements OnMapReadyCallback {
                         e.printStackTrace();
                     }
                 }
-
                 return false;
             }
 
@@ -151,6 +139,32 @@ public class Hotel_address extends Fragment implements OnMapReadyCallback {
             @Override
             public void onMarkerDragEnd(Marker marker) {
                 updateUI(marker);
+            }
+        });
+    }
+
+    private void getAddressFromDB(){
+
+        Query query;
+
+        if(Helper.isHotel(getContext()))
+            query = db.child("Hotels").child(Helper.getHotelIdFromPreference(getContext())).child("address");
+        else query = db.child("Users").child(UserPrefs.getPhoneNumber(getContext())).child("address");
+
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    hotel_address = dataSnapshot.getValue(com.example.uberforhotels.models.Address.class);
+                    placeMarker(new LatLng(hotel_address.getLat(), hotel_address.getLng()));
+                }else{
+                    placeMarker(position);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Helper.toast(getContext(), databaseError.toString());
             }
         });
     }
