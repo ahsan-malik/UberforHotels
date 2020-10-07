@@ -83,7 +83,7 @@ public class UserProfileActivity extends AppCompatActivity implements Navigation
             // Handle the camera action
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new UserHome()).commit();
         } else if (id == R.id.nav_gallery) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Hotel_address()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Hotel_address()).addToBackStack(null).commit();
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_tools) {
