@@ -14,6 +14,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.uberforhotels.Other.Helper;
 import com.example.uberforhotels.Other.UserPrefs;
+import com.example.uberforhotels.fragments.Hotel_address;
 import com.example.uberforhotels.fragments.UserHome;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -82,7 +83,7 @@ public class UserProfileActivity extends AppCompatActivity implements Navigation
             // Handle the camera action
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new UserHome()).commit();
         } else if (id == R.id.nav_gallery) {
-
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Hotel_address()).commit();
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_tools) {

@@ -42,8 +42,7 @@ public class UserHomeAdapter extends RecyclerView.Adapter<UserHomeAdapter.ViewHo
         holder.name.setText(hotel.getHotel_name());
         if (hotel.getImageUrl() != null && !hotel.getImageUrl().isEmpty() && !hotel.getImageUrl().equals(""))
             Picasso.get().load(hotel.getImageUrl()).into(holder.img);
-        if (hotel.getAddress() != null)
-            holder.address.setText(hotel.getAddress().getAddressLine());
+        holder.address.setText(hotel.getAddress().getAddressLine());
     }
 
     @Override

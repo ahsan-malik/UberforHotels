@@ -1,5 +1,6 @@
 package com.example.uberforhotels.fragments;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +12,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uberforhotels.Other.Helper;
+import com.example.uberforhotels.Other.UserPrefs;
 import com.example.uberforhotels.R;
 import com.example.uberforhotels.adapters.UserHomeAdapter;
 import com.example.uberforhotels.models.Hotel;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -46,23 +49,34 @@ public class UserHome extends Fragment {
     public void onResume() {
         super.onResume();
 
-        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+        if (UserPrefs.isAddressSaved(getContext())) {
+            DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+            LatLng userCurrentLatLng = UserPrefs.getLatLng(getContext());
+            ArrayList<Hotel> hotels = new ArrayList<>();
+            db.child("Hotels").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    hotels.clear();
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        Hotel hotel = dataSnapshot.getValue(Hotel.class);
+                        if (hotel.getAddress() != null) {
+                            float[] result = new float[1];
+                            Location.distanceBetween(userCurrentLatLng.latitude, userCurrentLatLng.longitude, hotel.getAddress().getLat(), hotel.getAddress().getLng(), result);
+                            if (result[0] < 5500) {
+                                hotels.add(hotel);
+                            }
+                        }
+                    }
 
-        ArrayList<Hotel> hotels = new ArrayList<>();
-        db.child("Hotels").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                hotels.clear();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren())
-                    hotels.add(dataSnapshot.getValue(Hotel.class));
+                    featureRecyclerView.setAdapter(new UserHomeAdapter(hotels, false));
+                    allHotelRecyclerView.setAdapter(new UserHomeAdapter(hotels, true));
+                }
 
-                featureRecyclerView.setAdapter(new UserHomeAdapter(hotels, false));
-                allHotelRecyclerView.setAdapter(new UserHomeAdapter(hotels, true));
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Helper.toast(getContext(), error.getMessage());
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Helper.toast(getContext(), error.getMessage());
+                }
+            });
+        }
     }
 }
