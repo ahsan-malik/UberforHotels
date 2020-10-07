@@ -64,11 +64,11 @@ public class UserHome extends Fragment {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         Hotel hotel = dataSnapshot.getValue(Hotel.class);
                         if (hotel.getAddress() != null) {
-                            float[] result = new float[2];
+                            float[] result = new float[1];
                             Location.distanceBetween(userCurrentLatLng.latitude, userCurrentLatLng.longitude, hotel.getAddress().getLat(), hotel.getAddress().getLng(), result);
-                            if (result[1] < 9995500) {
+                            if (result[0] < 9995500) {
                                 hotels.add(hotel);
-                                distances.add(result[1]/1000);
+                                distances.add(result[0]/1000);
                             }
                         }
                     }

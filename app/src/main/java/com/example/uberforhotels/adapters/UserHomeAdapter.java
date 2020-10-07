@@ -19,7 +19,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class UserHomeAdapter extends RecyclerView.Adapter<UserHomeAdapter.ViewHolder> {
 
@@ -58,7 +57,7 @@ public class UserHomeAdapter extends RecyclerView.Adapter<UserHomeAdapter.ViewHo
 
             //String uri = String.format(Locale.ENGLISH, "geo:%f,%f", hotel.getAddress().getLat(), hotel.getAddress().getLng());
 
-            LatLng userLatLng =UserPrefs.getLatLng(view.getContext());
+            LatLng userLatLng = UserPrefs.getLatLng(view.getContext());
             String uri = "http://maps.google.com/maps?saddr=" + userLatLng.latitude + "," + userLatLng.longitude
                     + "&daddr=" + hotel.getAddress().getLat() + "," + hotel.getAddress().getLng();
 
