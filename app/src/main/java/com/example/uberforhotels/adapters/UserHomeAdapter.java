@@ -53,7 +53,7 @@ public class UserHomeAdapter extends RecyclerView.Adapter<UserHomeAdapter.ViewHo
         holder.address.setText(hotel.getAddress().getAddressLine());
         holder.distance.setText(String.format("%.1f", distances.get(position)) + "km");
 
-        holder.itemView.setOnClickListener(view -> {
+        holder.distance.setOnClickListener(view -> {
 
             //String uri = String.format(Locale.ENGLISH, "geo:%f,%f", hotel.getAddress().getLat(), hotel.getAddress().getLng());
 
