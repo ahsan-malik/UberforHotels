@@ -22,18 +22,20 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
         android:orientation="horizontal"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_margin="@dimen/_5sdp"
-        android:elevation="@dimen/_39sdp">
+        android:layout_marginTop="@dimen/_7sdp"
+        android:elevation="@dimen/_39sdp"
+        android:padding="@dimen/_3sdp">
 
         <ImageView
             android:layout_width="@dimen/_9sdp"
             android:layout_height="@dimen/_9sdp"
             android:layout_marginTop="@dimen/_2sdp"
             android:src="@drawable/ic_baseline_near_me"
-            android:tint="@color/gray" />
+            android:tint="@color/whitecolor"/>
 
         <TextView
             android:id="@+id/distance"
@@ -42,6 +44,7 @@
             android:layout_marginLeft="@dimen/_1sdp"
             android:textAlignment="center"
             android:text="3.2km"
+            android:textStyle="bold"
             android:textSize="@dimen/_9sdp"
             android:textColor="@color/whitecolor"/>
 

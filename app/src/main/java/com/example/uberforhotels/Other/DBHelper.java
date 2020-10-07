@@ -66,6 +66,7 @@ public class DBHelper {
         }
         else {
             db.child("Users").child(UserPrefs.getPhoneNumber(context)).child("address").setValue(address).addOnSuccessListener(aVoid -> {
+                UserPrefs.saveLatLng(address, context);
                 Helper.toast(context, "address updated");
             }).addOnFailureListener(e -> Helper.toast(context, e.getMessage()));
         }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.example.uberforhotels.models.Address;
 import com.example.uberforhotels.models.User;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -53,7 +54,7 @@ public class UserPrefs {
     public static LatLng getLatLng(Context context){
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return new LatLng(
-                (double) prefs.getFloat("latitude", 0),
+                getLat(context),
                 (double) prefs.getFloat("longitude", 0)
         );
     }
@@ -68,6 +69,11 @@ public class UserPrefs {
         if (prefs.contains("longitude"))
             return true;
         return false;
+    }
+
+    public static void saveLatLng(Address address, Context context){
+        setLat(address.getLat(), context);
+        setLng(address.getLng(), context);
     }
 
     public static void saveUserState(User user, Context context){

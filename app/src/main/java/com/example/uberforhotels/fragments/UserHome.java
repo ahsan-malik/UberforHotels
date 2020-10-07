@@ -24,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,26 +51,30 @@ public class UserHome extends Fragment {
         super.onResume();
 
         if (UserPrefs.isAddressSaved(getContext())) {
-            DatabaseReference db = FirebaseDatabase.getInstance().getReference();
             LatLng userCurrentLatLng = UserPrefs.getLatLng(getContext());
             ArrayList<Hotel> hotels = new ArrayList<>();
+            ArrayList<Float> distances = new ArrayList<>();
+
+            DatabaseReference db = FirebaseDatabase.getInstance().getReference();
             db.child("Hotels").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     hotels.clear();
+                    distances.clear();
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         Hotel hotel = dataSnapshot.getValue(Hotel.class);
                         if (hotel.getAddress() != null) {
-                            float[] result = new float[1];
+                            float[] result = new float[2];
                             Location.distanceBetween(userCurrentLatLng.latitude, userCurrentLatLng.longitude, hotel.getAddress().getLat(), hotel.getAddress().getLng(), result);
-                            if (result[0] < 5500) {
+                            if (result[1] < 9995500) {
                                 hotels.add(hotel);
+                                distances.add(result[1]/1000);
                             }
                         }
                     }
 
-                    featureRecyclerView.setAdapter(new UserHomeAdapter(hotels, false));
-                    allHotelRecyclerView.setAdapter(new UserHomeAdapter(hotels, true));
+                    featureRecyclerView.setAdapter(new UserHomeAdapter(hotels, distances, false));
+                    allHotelRecyclerView.setAdapter(new UserHomeAdapter(hotels, distances, true));
                 }
 
                 @Override
@@ -77,6 +82,8 @@ public class UserHome extends Fragment {
                     Helper.toast(getContext(), error.getMessage());
                 }
             });
+        }else{
+            Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Hotel_address()).commit();
         }
     }
 }
