@@ -44,6 +44,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         holder.bed.setText(": " + room.getBeds());
         if (room.getStatus() != null)
             holder.status.setText(room.getStatus());
+
         if (room.getImageUrl() != null)
             Picasso.get().load(room.getImageUrl()).into(holder.img);
         else
