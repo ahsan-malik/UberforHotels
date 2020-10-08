@@ -42,16 +42,12 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         holder.id.setText("Room-" + room.getRoom_id());
         holder.rent.setText("Rs " + room.getRent());
         holder.bed.setText(": " + room.getBeds());
+        if (room.getStatus() != null)
+            holder.status.setText(room.getStatus());
         if (room.getImageUrl() != null)
             Picasso.get().load(room.getImageUrl()).into(holder.img);
         else
             Picasso.get().load(R.drawable.door).into(holder.img);
-        if(room.getStatus().equals("checked"))
-            holder.availImg.setImageResource(R.drawable.ic_baseline_check_12); //checked icon
-        else if (room.getStatus().equals("reserved"))
-            holder.availImg.setImageResource(R.drawable.ic_baseline_clear_12); //reserved icon
-        else
-            holder.availImg.setImageResource(R.drawable.ic_baseline_clear_12); //available icon
         if(room.isInternet())
             holder.wifi.setImageResource(R.drawable.ic_baseline_wifi_12);
         else
@@ -72,17 +68,17 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
 
     public static class RoomViewHolder extends RecyclerView.ViewHolder {
 
-       TextView id, bed, rent;
-       ImageView availImg, wifi, img;
+       TextView id, bed, rent, status;
+       ImageView wifi, img;
 
        public RoomViewHolder(@NonNull View itemView) {
            super(itemView);
            id = itemView.findViewById(R.id.text_id);
            rent = itemView.findViewById(R.id.rent);
            bed = itemView.findViewById(R.id.bedText);
-           availImg = itemView.findViewById(R.id.av_img);
            wifi = itemView.findViewById(R.id.wifiImg);
            img = itemView.findViewById(R.id.img);
+           status= itemView.findViewById(R.id.statusText);
        }
     }
 }

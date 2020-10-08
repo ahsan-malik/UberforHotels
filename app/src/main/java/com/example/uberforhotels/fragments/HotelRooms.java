@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
-import android.widget.AdapterView;
+
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -43,7 +43,7 @@ import java.util.Objects;
 
 import static android.app.Activity.RESULT_OK;
 
-public class HotelRooms extends Fragment implements AdapterView.OnItemSelectedListener {
+public class HotelRooms extends Fragment {
 
     FloatingActionButton floatingActionButton;
     RecyclerView recyclerView;
@@ -121,7 +121,7 @@ public class HotelRooms extends Fragment implements AdapterView.OnItemSelectedLi
                     R.array.statusArray, android.R.layout.simple_spinner_item);
             statusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             statusSpinner.setAdapter(statusAdapter);
-            statusSpinner.setOnItemSelectedListener(this);
+            //statusSpinner.setOnItemSelectedListener(this);
 
 
             Objects.requireNonNull(id_layout.getEditText()).setText(Integer.toString(room.getRoom_id()));
@@ -131,10 +131,12 @@ public class HotelRooms extends Fragment implements AdapterView.OnItemSelectedLi
             //avail_box.setChecked(room.isAvailable());
 
             int position = 0;
-            if(room.getStatus().equals(getResources().getStringArray(R.array.statusArray)[1]))
-                position = 1;
-            else if(room.getStatus().equals(getResources().getStringArray(R.array.statusArray)[2]))
-                position = 2;
+            if (room.getStatus() != null) {
+                if (room.getStatus().equals(getResources().getStringArray(R.array.statusArray)[1]))
+                    position = 1;
+                else if (room.getStatus().equals(getResources().getStringArray(R.array.statusArray)[2]))
+                    position = 2;
+            }
             statusSpinner.setSelection(position);
 
             if(room.getImageUrl() != null){
@@ -217,13 +219,4 @@ public class HotelRooms extends Fragment implements AdapterView.OnItemSelectedLi
         alertDialog.dismiss();
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
 }
