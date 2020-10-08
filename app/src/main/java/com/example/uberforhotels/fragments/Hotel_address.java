@@ -92,9 +92,7 @@ public class Hotel_address extends Fragment implements OnMapReadyCallback {
 
         getAddressFromDB();
 
-        sheetButton.setOnClickListener(view -> {
-            DBHelper.addAddress(hotel_address, getContext());
-        });
+        sheetButton.setOnClickListener(view -> DBHelper.addAddress(hotel_address, getContext()));
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

@@ -2,29 +2,29 @@ package com.example.uberforhotels.models;
 
 public class Room {
     int room_id, beds;
-    boolean internet, available;
+    boolean internet;
     double rent;
-    String imageUrl;
+    String imageUrl, status;
 
     public Room() {
 
     }
 
-    public Room(int room_id, int beds, boolean internet, boolean available, double rent, String imageUrl) {
+    public Room(int room_id, int beds, boolean internet, double rent, String status, String imageUrl) {
         this.room_id = room_id;
         this.beds = beds;
         this.internet = internet;
-        this.available = available;
         this.rent = rent;
+        this.status = status;
         this.imageUrl = imageUrl;
     }
 
-    public boolean isAvailable() {
-        return available;
+    public String getStatus() {
+        return status;
     }
 
-    public void setAvailable(boolean available) {
-        this.available = available;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public int getRoom_id() {

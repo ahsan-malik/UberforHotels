@@ -46,10 +46,12 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
             Picasso.get().load(room.getImageUrl()).into(holder.img);
         else
             Picasso.get().load(R.drawable.door).into(holder.img);
-        if(room.isAvailable())
-            holder.availImg.setImageResource(R.drawable.ic_baseline_check_12);
+        if(room.getStatus().equals("checked"))
+            holder.availImg.setImageResource(R.drawable.ic_baseline_check_12); //checked icon
+        else if (room.getStatus().equals("reserved"))
+            holder.availImg.setImageResource(R.drawable.ic_baseline_clear_12); //reserved icon
         else
-            holder.availImg.setImageResource(R.drawable.ic_baseline_clear_12);
+            holder.availImg.setImageResource(R.drawable.ic_baseline_clear_12); //available icon
         if(room.isInternet())
             holder.wifi.setImageResource(R.drawable.ic_baseline_wifi_12);
         else

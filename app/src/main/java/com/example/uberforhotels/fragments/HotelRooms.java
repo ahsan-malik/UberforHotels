@@ -9,8 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -40,7 +43,7 @@ import java.util.Objects;
 
 import static android.app.Activity.RESULT_OK;
 
-public class HotelRooms extends Fragment {
+public class HotelRooms extends Fragment implements AdapterView.OnItemSelectedListener {
 
     FloatingActionButton floatingActionButton;
     RecyclerView recyclerView;
@@ -112,13 +115,28 @@ public class HotelRooms extends Fragment {
             TextInputLayout rent_layout = room_form.findViewById(R.id.rent);
             TextInputLayout bed_layout = room_form.findViewById(R.id.beds);
             CheckBox wifi_box = room_form.findViewById(R.id.wifi);
-            CheckBox avail_box = room_form.findViewById(R.id.available);
+
+            Spinner statusSpinner = room_form.findViewById(R.id.statusSpinner);
+            ArrayAdapter<CharSequence> statusAdapter = ArrayAdapter.createFromResource(getContext(),
+                    R.array.statusArray, android.R.layout.simple_spinner_item);
+            statusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            statusSpinner.setAdapter(statusAdapter);
+            statusSpinner.setOnItemSelectedListener(this);
+
 
             Objects.requireNonNull(id_layout.getEditText()).setText(Integer.toString(room.getRoom_id()));
             Objects.requireNonNull(rent_layout.getEditText()).setText(Double.toString(room.getRent()));
             Objects.requireNonNull(bed_layout.getEditText()).setText(Integer.toString(room.getBeds()));
             wifi_box.setChecked(room.isInternet());
-            avail_box.setChecked(room.isAvailable());
+            //avail_box.setChecked(room.isAvailable());
+
+            int position = 0;
+            if(room.getStatus().equals(getResources().getStringArray(R.array.statusArray)[1]))
+                position = 1;
+            else if(room.getStatus().equals(getResources().getStringArray(R.array.statusArray)[2]))
+                position = 2;
+            statusSpinner.setSelection(position);
+
             if(room.getImageUrl() != null){
                 roomImgUrl = room.getImageUrl();
                 Picasso.get().load(roomImgUrl).into(formImg);
@@ -162,7 +180,8 @@ public class HotelRooms extends Fragment {
         TextInputLayout rent_layout = room_form.findViewById(R.id.rent);
         TextInputLayout bed_layout = room_form.findViewById(R.id.beds);
         CheckBox wifi_box = room_form.findViewById(R.id.wifi);
-        CheckBox avail_box = room_form.findViewById(R.id.available);
+        Spinner spinner = room_form.findViewById(R.id.statusSpinner);
+        //CheckBox avail_box = room_form.findViewById(R.id.available);
 
         if(Helper.isEmpty(id_layout) | Helper.isEmpty(rent_layout) | Helper.isEmpty(bed_layout)) return;
 
@@ -170,7 +189,8 @@ public class HotelRooms extends Fragment {
         int beds = Integer.parseInt(Objects.requireNonNull(bed_layout.getEditText()).getText().toString());
         double rent = Double.parseDouble(Objects.requireNonNull(rent_layout.getEditText()).getText().toString());
         boolean wifi = wifi_box.isChecked();
-        boolean availability = avail_box.isChecked();
+        String status = spinner.getSelectedItem().toString();
+        //boolean availability = avail_box.isChecked();
 
         if (formImgUri != null){
             String hid = Helper.getHotelIdFromPreference(getContext());
@@ -181,14 +201,14 @@ public class HotelRooms extends Fragment {
 
             fileReference.putFile(formImgUri).addOnSuccessListener(taskSnapshot ->
                     Objects.requireNonNull(Objects.requireNonNull(taskSnapshot.getMetadata()).getReference()).getDownloadUrl()
-                            .addOnSuccessListener(uri -> addRoomToDB(new Room(id, beds, wifi, availability, rent, uri.toString()))))
+                            .addOnSuccessListener(uri -> addRoomToDB(new Room(id, beds, wifi, rent, status, uri.toString()))))
                     .addOnFailureListener(e -> Helper.toast(getContext(), e.getMessage()))
                     .addOnProgressListener(taskSnapshot -> Helper.toast(getContext(), "Uploading..."));
         }
         else if (roomImgUrl != null)
-            addRoomToDB(new Room(id, beds, wifi, availability, rent, roomImgUrl));
+            addRoomToDB(new Room(id, beds, wifi, rent, status, roomImgUrl));
         else
-            addRoomToDB(new Room(id, beds, wifi, availability, rent, null));
+            addRoomToDB(new Room(id, beds, wifi, rent, status, null));
     }
 
     private void addRoomToDB(Room room){
@@ -197,4 +217,13 @@ public class HotelRooms extends Fragment {
         alertDialog.dismiss();
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
 }
