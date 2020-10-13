@@ -113,7 +113,6 @@ public class HotelRooms extends Fragment {
         alertDialog.show();
 
         formImg = room_form.findViewById(R.id.img);
-
         id_layout = room_form.findViewById(R.id.room_id);
         rent_layout = room_form.findViewById(R.id.rent);
         bed_layout = room_form.findViewById(R.id.beds);

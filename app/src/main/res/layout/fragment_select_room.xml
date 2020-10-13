@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_150sdp">
+
+    <ImageView
+        android:id="@+id/backImg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/hotelimg"
+        android:scaleType="centerCrop"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/semi_transparent"
+        android:elevation="@dimen/_1sdp"/>
+
+    <TextView
+        android:id="@+id/hotelName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/_5sdp"
+        android:layout_centerInParent="true"
+        android:maxLines="1"
+        android:elevation="@dimen/_2sdp"
+        android:text="Madni Dera Family Restaurant and Hotel"
+        android:textColor="@color/whitecolor"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textSize="@dimen/_20sdp"/>
+
+</RelativeLayout>
