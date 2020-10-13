@@ -47,8 +47,12 @@ public class HotelRooms extends Fragment {
 
     FloatingActionButton floatingActionButton;
     RecyclerView recyclerView;
+
     View room_form;
     ImageView formImg;
+    Spinner statusSpinner;
+    TextInputLayout id_layout, rent_layout, bed_layout;
+    CheckBox wifi_box;
 
     Uri formImgUri = null;
     String roomImgUrl = null;
@@ -110,19 +114,20 @@ public class HotelRooms extends Fragment {
 
         formImg = room_form.findViewById(R.id.img);
 
+        id_layout = room_form.findViewById(R.id.room_id);
+        rent_layout = room_form.findViewById(R.id.rent);
+        bed_layout = room_form.findViewById(R.id.beds);
+        wifi_box = room_form.findViewById(R.id.wifi);
+
+        statusSpinner = room_form.findViewById(R.id.statusSpinner);
+        ArrayAdapter<CharSequence> statusAdapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.statusArray, android.R.layout.simple_spinner_item);
+        statusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        statusSpinner.setAdapter(statusAdapter);
+        statusSpinner.setSelection(0);
+        //statusSpinner.setOnItemSelectedListener(this);
+
         if (room != null){
-            TextInputLayout id_layout = room_form.findViewById(R.id.room_id);
-            TextInputLayout rent_layout = room_form.findViewById(R.id.rent);
-            TextInputLayout bed_layout = room_form.findViewById(R.id.beds);
-            CheckBox wifi_box = room_form.findViewById(R.id.wifi);
-
-            Spinner statusSpinner = room_form.findViewById(R.id.statusSpinner);
-            ArrayAdapter<CharSequence> statusAdapter = ArrayAdapter.createFromResource(getContext(),
-                    R.array.statusArray, android.R.layout.simple_spinner_item);
-            statusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            statusSpinner.setAdapter(statusAdapter);
-            //statusSpinner.setOnItemSelectedListener(this);
-
 
             Objects.requireNonNull(id_layout.getEditText()).setText(Integer.toString(room.getRoom_id()));
             Objects.requireNonNull(rent_layout.getEditText()).setText(Double.toString(room.getRent()));
@@ -178,12 +183,6 @@ public class HotelRooms extends Fragment {
     }
 
     private void addRoom(){
-        TextInputLayout id_layout = room_form.findViewById(R.id.room_id);
-        TextInputLayout rent_layout = room_form.findViewById(R.id.rent);
-        TextInputLayout bed_layout = room_form.findViewById(R.id.beds);
-        CheckBox wifi_box = room_form.findViewById(R.id.wifi);
-        Spinner spinner = room_form.findViewById(R.id.statusSpinner);
-        //CheckBox avail_box = room_form.findViewById(R.id.available);
 
         if(Helper.isEmpty(id_layout) | Helper.isEmpty(rent_layout) | Helper.isEmpty(bed_layout)) return;
 
@@ -191,7 +190,7 @@ public class HotelRooms extends Fragment {
         int beds = Integer.parseInt(Objects.requireNonNull(bed_layout.getEditText()).getText().toString());
         double rent = Double.parseDouble(Objects.requireNonNull(rent_layout.getEditText()).getText().toString());
         boolean wifi = wifi_box.isChecked();
-        String status = spinner.getSelectedItem().toString();
+        String status = statusSpinner.getSelectedItem().toString();
         //boolean availability = avail_box.isChecked();
 
         if (formImgUri != null){
