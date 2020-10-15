@@ -1,34 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_150sdp">
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/backImg"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/hotelimg"
-        android:scaleType="centerCrop"/>
+        android:layout_height="@dimen/_150sdp"
+        android:foreground="@color/semi_transparent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/hotelimg" />
 
-    <View
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/semi_transparent"
-        android:elevation="@dimen/_1sdp"/>
+        android:layout_height="@dimen/_138sdp"
+        android:orientation="vertical"
+        android:gravity="center_horizontal|bottom"
+        android:elevation="@dimen/_1sdp">
 
-    <TextView
-        android:id="@+id/hotelName"
+        <TextView
+            android:id="@+id/hotelName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingHorizontal="@dimen/_5sdp"
+            android:text="Madni Dera Family Restaurant and Hotel"
+            android:textAlignment="center"
+            android:textColor="@color/whitecolor"
+            android:textSize="@dimen/_20sdp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/rounded_corner"
+            android:padding="@dimen/_5sdp"
+            android:text="Distance 4 km"
+            android:textColor="@color/whitecolor" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp">
+
+            <RatingBar
+                android:id="@+id/ratingStar"
+                style="@style/Widget.AppCompat.RatingBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isIndicator="false"
+                android:max="5"
+                android:numStars="1"
+                android:progressTint="@color/whitecolor"
+                android:rating="2.5" />
+
+            <TextView
+                android:id="@+id/ratingText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_2sdp"
+                android:text="3.2"
+                android:textAlignment="center"
+                android:textColor="@color/whitecolor"
+                android:textSize="@dimen/_9sdp" />
+
+            <TextView
+                android:id="@+id/ratingNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_2sdp"
+                android:text="(47)"
+                android:textAlignment="center"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_9sdp" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/_5sdp"
-        android:layout_centerInParent="true"
-        android:maxLines="1"
-        android:elevation="@dimen/_2sdp"
-        android:text="Madni Dera Family Restaurant and Hotel"
-        android:textColor="@color/whitecolor"
-        android:textStyle="bold"
-        android:textAlignment="center"
-        android:textSize="@dimen/_20sdp"/>
+        android:layout_below="@+id/backImg"
+        android:layout_marginHorizontal="@dimen/_20sdp"
+        android:layout_marginTop="-20dp"
+        android:background="@drawable/card"
+        android:elevation="@dimen/_3sdp"
+        android:orientation="horizontal"
+        android:padding="@dimen/_7sdp"
+        android:weightSum="10">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_location_on_black"
+            android:tint="@color/gray" />
+
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="0dp"
+            android:layout_weight="6.5"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="16-Shami Road Civil Lines, Sheikhupura" />
+
+        <TextView
+            android:id="@+id/gerDirection"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2.5"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Get Direction"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
+
 
 </RelativeLayout>
