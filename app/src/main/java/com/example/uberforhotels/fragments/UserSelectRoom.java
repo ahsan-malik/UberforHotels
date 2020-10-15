@@ -94,10 +94,12 @@ public class UserSelectRoom extends Fragment {
         db.child("Rooms").child(hotel.getId()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                rooms.clear();
                 if (snapshot.exists()){
                     for (DataSnapshot dataSnapshot: snapshot.getChildren()){
                         rooms.add(dataSnapshot.getValue(Room.class));
                     }
+                    roomRecyclerView.setAdapter();
                 }
             }
 
