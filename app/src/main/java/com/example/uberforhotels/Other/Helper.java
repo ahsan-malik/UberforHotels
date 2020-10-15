@@ -3,9 +3,12 @@ package com.example.uberforhotels.Other;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 
+import com.example.uberforhotels.models.Hotel;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
@@ -80,6 +83,18 @@ public class Helper {
     public static String getPrefsCoverImgUrl(Context context){
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getString("coverImage", null);
+    }
+
+    public static void openGoogleMapForDirection(Context context, Hotel hotel){
+        //String uri = String.format(Locale.ENGLISH, "geo:%f,%f", hotel.getAddress().getLat(), hotel.getAddress().getLng());
+
+        LatLng userLatLng = UserPrefs.getLatLng(context);
+        String uri = "http://maps.google.com/maps?saddr=" + userLatLng.latitude + "," + userLatLng.longitude
+                + "&daddr=" + hotel.getAddress().getLat() + "," + hotel.getAddress().getLng();
+
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+        intent.setPackage("com.google.android.apps.maps");
+        context.startActivity(intent);
     }
 
 }

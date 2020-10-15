@@ -1,13 +1,12 @@
 package com.example.uberforhotels.fragments;
 
+import android.annotation.SuppressLint;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,8 +15,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.uberforhotels.Other.Helper;
 import com.example.uberforhotels.Other.UserPrefs;
 import com.example.uberforhotels.R;
+import com.example.uberforhotels.adapters.UserRoomAdapter;
 import com.example.uberforhotels.models.Hotel;
 import com.example.uberforhotels.models.Room;
 import com.google.firebase.database.DataSnapshot;
@@ -28,7 +29,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,8 +49,6 @@ public class UserSelectRoom extends Fragment {
     TextView distance;
     @BindView(R.id.address)
     TextView address;
-    @BindView(R.id.gerDirection)
-    TextView gerDirection;
 
     Unbinder unbinder;
     @BindView(R.id.roomRecyclerView)
@@ -76,8 +74,10 @@ public class UserSelectRoom extends Fragment {
 
     @OnClick(R.id.gerDirection)
     public void onViewClicked() {
+        Helper.openGoogleMapForDirection(getContext(), hotel);
     }
 
+    @SuppressLint("SetTextI18n")
     void fillUI(){
 
         float[] straightDistance = new float[1];
@@ -99,7 +99,7 @@ public class UserSelectRoom extends Fragment {
                     for (DataSnapshot dataSnapshot: snapshot.getChildren()){
                         rooms.add(dataSnapshot.getValue(Room.class));
                     }
-                    roomRecyclerView.setAdapter();
+                    roomRecyclerView.setAdapter(new UserRoomAdapter(rooms));
                 }
             }
 

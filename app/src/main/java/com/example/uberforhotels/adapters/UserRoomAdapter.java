@@ -1,5 +1,6 @@
 package com.example.uberforhotels.adapters;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ public class UserRoomAdapter extends RecyclerView.Adapter<UserRoomAdapter.ViewHo
         return new ViewHolder(roomView);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
@@ -50,12 +52,7 @@ public class UserRoomAdapter extends RecyclerView.Adapter<UserRoomAdapter.ViewHo
         holder.price.setText("Rs "+room.getRent());
         holder.roomId.setText("Room No: "+ room.getRoom_id());
 
-        holder.bookBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Helper.toast(holder.itemView.getContext(), "you reserved the room ");
-            }
-        });
+        holder.bookBtn.setOnClickListener(view -> Helper.toast(holder.itemView.getContext(), "you reserved the room "));
 
     }
 

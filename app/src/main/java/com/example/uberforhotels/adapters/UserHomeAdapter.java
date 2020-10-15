@@ -1,8 +1,6 @@
 package com.example.uberforhotels.adapters;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.uberforhotels.Other.UserPrefs;
+import com.example.uberforhotels.Other.Helper;
 import com.example.uberforhotels.R;
 import com.example.uberforhotels.fragments.UserSelectRoom;
 import com.example.uberforhotels.models.Hotel;
-import com.google.android.gms.maps.model.LatLng;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -55,18 +52,8 @@ public class UserHomeAdapter extends RecyclerView.Adapter<UserHomeAdapter.ViewHo
         holder.address.setText(hotel.getAddress().getAddressLine());
         holder.distance.setText(String.format("%.1f", distances.get(position)) + "km");
 
-        holder.distance.setOnClickListener(view -> {
+        holder.distance.setOnClickListener(view -> Helper.openGoogleMapForDirection(view.getContext(), hotel));
 
-            //String uri = String.format(Locale.ENGLISH, "geo:%f,%f", hotel.getAddress().getLat(), hotel.getAddress().getLng());
-
-            LatLng userLatLng = UserPrefs.getLatLng(view.getContext());
-            String uri = "http://maps.google.com/maps?saddr=" + userLatLng.latitude + "," + userLatLng.longitude
-                    + "&daddr=" + hotel.getAddress().getLat() + "," + hotel.getAddress().getLng();
-
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-            intent.setPackage("com.google.android.apps.maps");
-            view.getContext().startActivity(intent);
-        });
         holder.itemView.setOnClickListener(view -> ((FragmentActivity) view.getContext()).getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, new UserSelectRoom(hotel)).addToBackStack(null).commit());
     }
