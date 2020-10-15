@@ -77,7 +77,7 @@ public class UserSelectRoom extends Fragment {
         Helper.openGoogleMapForDirection(getContext(), hotel);
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "DefaultLocale"})
     void fillUI(){
 
         float[] straightDistance = new float[1];
@@ -87,7 +87,7 @@ public class UserSelectRoom extends Fragment {
         Picasso.get().load(hotel.getImageUrl()).into(backImg);
         hotelName.setText(hotel.getHotel_name());
         address.setText(hotel.getAddress().getAddressLine());
-        distance.setText("Distance " +straightDistance[0]/1000+ " km");
+        distance.setText("Distance " + String.format("%.1f", straightDistance[0]/1000) + " km");
 
         ArrayList<Room> rooms = new ArrayList<>();
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
@@ -97,7 +97,10 @@ public class UserSelectRoom extends Fragment {
                 rooms.clear();
                 if (snapshot.exists()){
                     for (DataSnapshot dataSnapshot: snapshot.getChildren()){
-                        rooms.add(dataSnapshot.getValue(Room.class));
+                        Room room = dataSnapshot.getValue(Room.class);
+                        if (room.getStatus() != null && room.getStatus().equals("Checked"))
+                            continue;
+                        else rooms.add(dataSnapshot.getValue(Room.class));
                     }
                     roomRecyclerView.setAdapter(new UserRoomAdapter(rooms));
                 }

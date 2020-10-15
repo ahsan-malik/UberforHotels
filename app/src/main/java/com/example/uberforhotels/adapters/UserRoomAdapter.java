@@ -49,6 +49,9 @@ public class UserRoomAdapter extends RecyclerView.Adapter<UserRoomAdapter.ViewHo
         if (room.getBeds() == 1)
             holder.bed.setText("Single Bed");
         else holder.bed.setText("Double Bed");
+        if (room.getStatus() != null && room.getStatus().equals("Reserved"))
+            holder.status.setText("Reserved");
+        else holder.status.setVisibility(View.INVISIBLE);
         holder.price.setText("Rs "+room.getRent());
         holder.roomId.setText("Room No: "+ room.getRoom_id());
 
@@ -75,6 +78,8 @@ public class UserRoomAdapter extends RecyclerView.Adapter<UserRoomAdapter.ViewHo
         TextView price;
         @BindView(R.id.bed)
         TextView bed;
+        @BindView(R.id.status)
+        TextView status;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
