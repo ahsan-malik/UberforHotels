@@ -124,6 +124,14 @@
 
     </LinearLayout>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/roomRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/backImg"
+        android:layout_marginTop="@dimen/_25sdp"
+        android:orientation="vertical"/>
+
 
 
 

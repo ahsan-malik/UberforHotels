@@ -50,6 +50,10 @@ public class UserPrefs {
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return (double) prefs.getFloat("latitude", 0);
     }
+    public static double getLng(Context context){
+        prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return (double) prefs.getFloat("longitude", 0);
+    }
 
     public static LatLng getLatLng(Context context){
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
