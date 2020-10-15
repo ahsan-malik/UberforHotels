@@ -1,6 +1,7 @@
 package com.example.uberforhotels.adapters;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -10,10 +11,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uberforhotels.Other.UserPrefs;
 import com.example.uberforhotels.R;
+import com.example.uberforhotels.fragments.HomeHotel;
+import com.example.uberforhotels.fragments.UserSelectRoom;
 import com.example.uberforhotels.models.Hotel;
 import com.google.android.gms.maps.model.LatLng;
 import com.squareup.picasso.Picasso;
@@ -64,6 +68,13 @@ public class UserHomeAdapter extends RecyclerView.Adapter<UserHomeAdapter.ViewHo
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
             intent.setPackage("com.google.android.apps.maps");
             view.getContext().startActivity(intent);
+        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((FragmentActivity) view.getContext()).getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new UserSelectRoom()).addToBackStack(null).commit();
+            }
         });
     }
 
