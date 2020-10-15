@@ -118,7 +118,7 @@
         android:layout_alignParentTop="true"
         android:paddingHorizontal="@dimen/_5sdp"
         android:paddingVertical="@dimen/_3sdp"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/red"
         android:text="Reserved"
         android:textSize="@dimen/_6sdp"
         android:textColor="@color/whitecolor"
