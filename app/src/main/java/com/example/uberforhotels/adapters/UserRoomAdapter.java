@@ -42,16 +42,12 @@ public class UserRoomAdapter extends RecyclerView.Adapter<UserRoomAdapter.ViewHo
 
         Room room = rooms.get(position);
 
-        if (room.getImageUrl() != null)
-            Picasso.get().load(room.getImageUrl()).into(holder.img);
-        if (!room.isInternet())
-            holder.internet.setVisibility(View.INVISIBLE);
-        if (room.getBeds() == 1)
-            holder.bed.setText("Single Bed");
-        else holder.bed.setText("Double Bed");
-        if (room.getStatus() != null && room.getStatus().equals("Reserved"))
-            holder.status.setText("Reserved");
-        else holder.status.setVisibility(View.INVISIBLE);
+        if (room.getImageUrl() != null){ Picasso.get().load(room.getImageUrl()).into(holder.img);}
+        if (!room.isInternet()){ holder.internet.setVisibility(View.INVISIBLE);}
+        if (room.getBeds() == 1) {holder.bed.setText("Single Bed");}
+        else {holder.bed.setText("Double Bed");}
+        if (room.getStatus() != null && room.getStatus().equals("Reserved")){ holder.status.setText("Reserved");}
+        else {holder.status.setVisibility(View.INVISIBLE);}
         holder.price.setText("Rs "+room.getRent());
         holder.roomId.setText("Room No: "+ room.getRoom_id());
 

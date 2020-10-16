@@ -3,9 +3,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.UserHome">
 
     <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:id="@+id/loadingDots"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="@dimen/_2sdp"
+        android:background="@color/whitecolor"
+        android:gravity="center">
+
+        <com.agrawalsuneet.dotsloader.loaders.TashieLoader
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:tashieloader_animDelay="200"
+            app:tashieloader_animDur="1000"
+            app:tashieloader_dotsColor="@color/colorPrimary"
+            app:tashieloader_dotsDist="5dp"
+            app:tashieloader_dotsRadius="10dp"
+            app:tashieloader_interpolator="@android:anim/accelerate_interpolator"
+            app:tashieloader_noOfDots="10" />
+
+
+    </LinearLayout>
+
 
     <ScrollView
         android:layout_width="match_parent"

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -35,6 +36,8 @@ public class UserHome extends Fragment {
     RecyclerView featureRecyclerView;
     @BindView(R.id.allHotelRecyclerView)
     RecyclerView allHotelRecyclerView;
+    @BindView(R.id.loadingDots)
+    LinearLayout loadingDots;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,13 +71,15 @@ public class UserHome extends Fragment {
                             Location.distanceBetween(userCurrentLatLng.latitude, userCurrentLatLng.longitude, hotel.getAddress().getLat(), hotel.getAddress().getLng(), result);
                             if (result[0] < 9995500) {
                                 hotels.add(hotel);
-                                distances.add(result[0]/1000);
+                                distances.add(result[0] / 1000);
                             }
                         }
                     }
 
                     featureRecyclerView.setAdapter(new UserHomeAdapter(hotels, distances, false));
                     allHotelRecyclerView.setAdapter(new UserHomeAdapter(hotels, distances, true));
+
+                    loadingDots.setVisibility(View.GONE);
                 }
 
                 @Override
@@ -82,7 +87,7 @@ public class UserHome extends Fragment {
                     Helper.toast(getContext(), error.getMessage());
                 }
             });
-        }else{
+        } else {
             Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Hotel_address()).commit();
         }
     }
