@@ -2,6 +2,8 @@ package com.example.uberforhotels.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,21 +50,21 @@ public class UserRoomAdapter extends RecyclerView.Adapter<UserRoomAdapter.ViewHo
         if (room.getBeds() == 1) {holder.bed.setText("Single Bed");} else {holder.bed.setText("Double Bed");}
         if (room.getStatus() == null || !room.getStatus().equals("Reserved")) {
             holder.status.setVisibility(View.INVISIBLE);
-            holder.bookBtn.setBackgroundTintList(ColorStateList.valueOf(R.color.colorPrimary));
+            holder.bookBtn.getBackground().setColorFilter(R.color.colorPrimary, PorterDuff.Mode.SRC_ATOP);
         }
         else {
             holder.status.setVisibility(View.VISIBLE);
             holder.status.setText("Reserved");
-            holder.bookBtn.setBackgroundTintList(ColorStateList.valueOf(R.color.gray));
+            holder.bookBtn.getBackground().setColorFilter(R.color.gray, PorterDuff.Mode.SRC_ATOP);
         }
         holder.price.setText("Rs "+room.getRent());
         holder.roomId.setText("Room No: "+ room.getRoom_id());
 
         holder.bookBtn.setOnClickListener(view -> {
-            if (room.getStatus().equals("Reserved"))
-                Helper.toast(holder.itemView.getContext(), "Room is reserved already");
-            else
+            if (room.getStatus() == null || !room.getStatus().equals("Reserved"))
                 Helper.toast(holder.itemView.getContext(), "you reserved the room ");
+            else
+                Helper.toast(holder.itemView.getContext(), "Room is reserved already");
         });
 
     }
