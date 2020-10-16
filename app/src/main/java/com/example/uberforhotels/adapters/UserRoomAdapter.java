@@ -1,6 +1,7 @@
 package com.example.uberforhotels.adapters;
 
 import android.annotation.SuppressLint;
+import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,22 +37,33 @@ public class UserRoomAdapter extends RecyclerView.Adapter<UserRoomAdapter.ViewHo
         return new ViewHolder(roomView);
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "ResourceAsColor"})
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         Room room = rooms.get(position);
 
         if (room.getImageUrl() != null){ Picasso.get().load(room.getImageUrl()).into(holder.img);}
-        if (!room.isInternet()){ holder.internet.setVisibility(View.INVISIBLE);}
-        if (room.getBeds() == 1) {holder.bed.setText("Single Bed");}
-        else {holder.bed.setText("Double Bed");}
-        if (room.getStatus() != null && room.getStatus().equals("Reserved")){ holder.status.setText("Reserved");}
-        else {holder.status.setVisibility(View.INVISIBLE);}
+        if (!room.isInternet()){ holder.internet.setVisibility(View.INVISIBLE);}else {holder.internet.setVisibility(View.VISIBLE);}
+        if (room.getBeds() == 1) {holder.bed.setText("Single Bed");} else {holder.bed.setText("Double Bed");}
+        if (room.getStatus() == null || !room.getStatus().equals("Reserved")) {
+            holder.status.setVisibility(View.INVISIBLE);
+            holder.bookBtn.setBackgroundTintList(ColorStateList.valueOf(R.color.colorPrimary));
+        }
+        else {
+            holder.status.setVisibility(View.VISIBLE);
+            holder.status.setText("Reserved");
+            holder.bookBtn.setBackgroundTintList(ColorStateList.valueOf(R.color.gray));
+        }
         holder.price.setText("Rs "+room.getRent());
         holder.roomId.setText("Room No: "+ room.getRoom_id());
 
-        holder.bookBtn.setOnClickListener(view -> Helper.toast(holder.itemView.getContext(), "you reserved the room "));
+        holder.bookBtn.setOnClickListener(view -> {
+            if (room.getStatus().equals("Reserved"))
+                Helper.toast(holder.itemView.getContext(), "Room is reserved already");
+            else
+                Helper.toast(holder.itemView.getContext(), "you reserved the room ");
+        });
 
     }
 
