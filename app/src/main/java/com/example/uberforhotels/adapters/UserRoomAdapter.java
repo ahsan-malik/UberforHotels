@@ -50,12 +50,12 @@ public class UserRoomAdapter extends RecyclerView.Adapter<UserRoomAdapter.ViewHo
         if (room.getBeds() == 1) {holder.bed.setText("Single Bed");} else {holder.bed.setText("Double Bed");}
         if (room.getStatus() == null || !room.getStatus().equals("Reserved")) {
             holder.status.setVisibility(View.INVISIBLE);
-            holder.bookBtn.getBackground().setColorFilter(R.color.colorPrimary, PorterDuff.Mode.SRC_ATOP);
+            holder.bookBtn.setBackgroundTintList(ColorStateList.valueOf(R.color.colorPrimary));
         }
         else {
             holder.status.setVisibility(View.VISIBLE);
             holder.status.setText("Reserved");
-            holder.bookBtn.getBackground().setColorFilter(R.color.gray, PorterDuff.Mode.SRC_ATOP);
+            holder.bookBtn.setBackgroundTintList(ColorStateList.valueOf(R.color.gray));
         }
         holder.price.setText("Rs "+room.getRent());
         holder.roomId.setText("Room No: "+ room.getRoom_id());

@@ -63,7 +63,8 @@
         android:paddingLeft="@dimen/_4sdp"
         android:paddingVertical="@dimen/_3sdp"
         android:background="@drawable/card"
-        android:backgroundTint="@color/colorPrimary">
+        android:backgroundTint="@color/colorPrimary"
+        android:backgroundTintMode="multiply">
 
         <ImageView
             android:layout_width="@dimen/_12sdp"
