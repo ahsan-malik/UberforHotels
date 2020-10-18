@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,9 @@ import com.example.uberforhotels.models.Hotel;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class UserHomeAdapter extends RecyclerView.Adapter<UserHomeAdapter.ViewHolder> {
 
@@ -35,7 +39,11 @@ public class UserHomeAdapter extends RecyclerView.Adapter<UserHomeAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         int layout;
-        if (isVertical) { layout = R.layout.item_allhotel; }else { layout = R.layout.item_feature; }
+        if (isVertical) {
+            layout = R.layout.item_allhotel;
+        } else {
+            layout = R.layout.item_feature;
+        }
         View hotelItem = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
         return new ViewHolder(hotelItem);
     }
@@ -45,6 +53,9 @@ public class UserHomeAdapter extends RecyclerView.Adapter<UserHomeAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         Hotel hotel = hotels.get(position);
+
+        holder.ratingText.setText(String.format("%.1f", hotel.getAverageRating()/hotel.getNumberOfUserRating()));
+        holder.ratingNum.setText("(" + hotel.getNumberOfUserRating() + ")");
 
         holder.name.setText(hotel.getHotel_name());
         if (hotel.getImageUrl() != null && !hotel.getImageUrl().isEmpty() && !hotel.getImageUrl().equals(""))
@@ -64,14 +75,24 @@ public class UserHomeAdapter extends RecyclerView.Adapter<UserHomeAdapter.ViewHo
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.img)
         ImageView img;
-        TextView name, address, distance;
+        @BindView(R.id.distance)
+        TextView distance;
+        @BindView(R.id.ratingStar)
+        RatingBar ratingStar;
+        @BindView(R.id.ratingText)
+        TextView ratingText;
+        @BindView(R.id.ratingNum)
+        TextView ratingNum;
+        @BindView(R.id.name)
+        TextView name;
+        @BindView(R.id.address)
+        TextView address;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            img = itemView.findViewById(R.id.img);
-            name = itemView.findViewById(R.id.name);
-            address = itemView.findViewById(R.id.address);
-            distance = itemView.findViewById(R.id.distance);
+            ButterKnife.bind(this, itemView);
         }
     }
 }
