@@ -1,10 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/whitecolor"
     tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/loader"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/whitecolor"
+        android:elevation="@dimen/_4sdp"
+        android:gravity="center">
+
+        <com.agrawalsuneet.dotsloader.loaders.CircularDotsLoader
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:loader_animDur="100"
+            app:loader_bigCircleRadius="42dp"
+            app:loader_circleRadius="14dp"
+            app:loader_defaultColor="@color/colorPrimary"
+            app:loader_firstShadowColor="@color/gray"
+            app:loader_secondShadowColor="@color/red"
+            app:loader_selectedColor="@color/design_default_color_primary_variant"
+            app:loader_showRunningShadow="true" />
+
+    </LinearLayout>
 
     <ImageView
         android:layout_width="wrap_content"

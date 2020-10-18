@@ -17,9 +17,9 @@ import androidx.fragment.app.Fragment;
 import com.example.uberforhotels.HotelProfileActivity;
 import com.example.uberforhotels.Other.DBHelper;
 import com.example.uberforhotels.Other.Helper;
+import com.example.uberforhotels.Other.HotelSinglton;
 import com.example.uberforhotels.R;
 import com.example.uberforhotels.models.Hotel;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
 
@@ -32,6 +32,8 @@ public class HotelSettings extends Fragment {
     TextView nameEdit;
     @BindView(R.id.statusSwitch)
     SwitchCompat statusSwitch;
+
+    Hotel hotel;
 
     @Nullable
     @Override
@@ -47,6 +49,8 @@ public class HotelSettings extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
+        hotel = HotelSinglton.getHotel();
 
         nameEdit.setText(Helper.getHotelNameFromPrefs(getContext()));
         statusSwitch.setChecked(Helper.getIsHotelOpenFromPrefs(getContext()));
@@ -80,14 +84,17 @@ public class HotelSettings extends Fragment {
                 break;
 
             case R.id.saveBtn:
-                DBHelper.addHotel(new Hotel(
+                /**DBHelper.addHotel(new Hotel(
                         Helper.getHotelIdFromPreference(getContext()),
                         nameEdit.getText().toString(),
                         Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail(),
                         Helper.getPrefsCoverImgUrl(getContext()),
                         statusSwitch.isChecked(),
                         null
-                ));
+                ));**/
+                hotel.setHotel_name(nameEdit.getText().toString());
+                hotel.setHotelOpen(statusSwitch.isChecked());
+                DBHelper.addHotel(hotel);
                 Helper.setHotelNameInPrefs(nameEdit.getText().toString(), getContext());
                 Helper.setHotelOpenInPrefs(statusSwitch.isChecked(), getContext());
                 ((HotelProfileActivity) Objects.requireNonNull(getActivity())).fillNavigationView();

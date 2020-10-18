@@ -1,9 +1,6 @@
 package com.example.uberforhotels.adapters;
 
 import android.annotation.SuppressLint;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.uberforhotels.Other.DBHelper;
 import com.example.uberforhotels.Other.Helper;
 import com.example.uberforhotels.R;
 import com.example.uberforhotels.models.Room;
@@ -27,9 +25,11 @@ import butterknife.ButterKnife;
 public class UserRoomAdapter extends RecyclerView.Adapter<UserRoomAdapter.ViewHolder> {
 
     ArrayList<Room> rooms;
+    String hotelID;
 
-    public UserRoomAdapter(ArrayList<Room> rooms) {
+    public UserRoomAdapter(ArrayList<Room> rooms, String hotelID) {
         this.rooms = rooms;
+        this.hotelID = hotelID;
     }
 
     @NonNull
@@ -48,22 +48,19 @@ public class UserRoomAdapter extends RecyclerView.Adapter<UserRoomAdapter.ViewHo
         if (room.getImageUrl() != null){ Picasso.get().load(room.getImageUrl()).into(holder.img);}
         if (!room.isInternet()){ holder.internet.setVisibility(View.INVISIBLE);}else {holder.internet.setVisibility(View.VISIBLE);}
         if (room.getBeds() == 1) {holder.bed.setText("Single Bed");} else {holder.bed.setText("Double Bed");}
-        if (room.getStatus() == null || !room.getStatus().equals("Reserved")) {
-            holder.status.setVisibility(View.INVISIBLE);
-            holder.bookBtn.setBackgroundTintList(ColorStateList.valueOf(R.color.colorPrimary));
-        }
-        else {
-            holder.status.setVisibility(View.VISIBLE);
-            holder.status.setText("Reserved");
-            holder.bookBtn.setBackgroundTintList(ColorStateList.valueOf(R.color.gray));
-        }
+        if (room.getStatus() == null || !room.getStatus().equals("Reserved")) { holder.status.setVisibility(View.INVISIBLE); }
+        else { holder.status.setVisibility(View.VISIBLE);holder.status.setText("Reserved"); }
         holder.price.setText("Rs "+room.getRent());
         holder.roomId.setText("Room No: "+ room.getRoom_id());
 
         holder.bookBtn.setOnClickListener(view -> {
-            if (room.getStatus() == null || !room.getStatus().equals("Reserved"))
-                Helper.toast(holder.itemView.getContext(), "you reserved the room ");
-            else
+            if (room.getStatus() == null || !room.getStatus().equals("Reserved")){
+                Visible(holder.status);
+                room.setStatus("Reserved");
+                holder.status.setText(room.getStatus());
+                DBHelper.updateRoom(hotelID, room);
+                //Helper.toast(holder.itemView.getContext(), "you reserved the room ");
+            }else
                 Helper.toast(holder.itemView.getContext(), "Room is reserved already");
         });
 
@@ -95,5 +92,12 @@ public class UserRoomAdapter extends RecyclerView.Adapter<UserRoomAdapter.ViewHo
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+
+    private void Visible(View view){
+        view.setVisibility(View.VISIBLE);
+    }
+    private void Invisible(View view){
+        view.setVisibility(View.INVISIBLE);
     }
 }

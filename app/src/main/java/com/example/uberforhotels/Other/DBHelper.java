@@ -17,6 +17,8 @@ import com.example.uberforhotels.models.Address;
 import com.example.uberforhotels.models.Hotel;
 import com.example.uberforhotels.models.Room;
 import com.example.uberforhotels.models.User;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -75,6 +77,10 @@ public class DBHelper {
     public static void addRoom(Room room, Context context){
         String uid = Helper.getHotelIdFromPreference(context);
         db.child("Rooms").child(uid).child(String.valueOf(room.getRoom_id())).setValue(room);
+    }
+
+    public static void updateRoom(String hotelID, Room room){
+        db.child("Rooms").child(hotelID).child(String.valueOf(room.getRoom_id())).setValue(room);
     }
 
     public static void deleteRoom(Room room, Context context){

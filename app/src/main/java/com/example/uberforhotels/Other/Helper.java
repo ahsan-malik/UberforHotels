@@ -30,6 +30,7 @@ public class Helper {
         return prefs.getString("hotel_id", "DEFAULT");
     }
 
+
     public static boolean isHotel(Context context){
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getBoolean("isHotel", false);
@@ -83,6 +84,24 @@ public class Helper {
     public static String getPrefsCoverImgUrl(Context context){
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getString("coverImage", null);
+    }
+
+    public static void setAverageRatingInPrefs(float rating, Context context){
+        prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        prefs.edit().putFloat("averageRating", rating).apply();
+    }
+    public static float getAverageRatingFromPrefs(Context context){
+        prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getFloat("averageRating", 0);
+    }
+
+    public static void setNumberOfRatingInPrefs(int rating, Context context){
+        prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        prefs.edit().putInt("numberRating", rating).apply();
+    }
+    public static int getNumberRatingFromPrefs(Context context){
+        prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getInt("numberRating", 0);
     }
 
     public static void openGoogleMapForDirection(Context context, Hotel hotel){

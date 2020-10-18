@@ -14,6 +14,7 @@ import android.widget.RadioButton;
 import com.agrawalsuneet.dotsloader.loaders.LazyLoader;
 import com.example.uberforhotels.HotelProfileActivity;
 import com.example.uberforhotels.Other.Helper;
+import com.example.uberforhotels.Other.HotelSinglton;
 import com.example.uberforhotels.Other.UserPrefs;
 import com.example.uberforhotels.R;
 import com.example.uberforhotels.UserProfileActivity;
@@ -117,6 +118,11 @@ public class LoginActivity extends AppCompatActivity {
                                 else prefs.edit().putString("hotel_city", "not set").apply();
                                 Helper.setHotelMailInPrefs(mail, getApplicationContext());
                                 Helper.setPrefsCoverImgUrl(hotel.getImageUrl(), LoginActivity.this);
+
+                                Helper.setAverageRatingInPrefs(hotel.getAverageRating(), getApplicationContext());
+                                Helper.setNumberOfRatingInPrefs(hotel.getNumberOfUserRating(), getApplicationContext());
+
+                                HotelSinglton.setHotel(hotel);
 
                                 Helper.LounchActivity(LoginActivity.this, HotelProfileActivity.class);
                                 finish();

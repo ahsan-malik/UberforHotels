@@ -14,6 +14,7 @@ import com.agrawalsuneet.dotsloader.loaders.LazyLoader;
 import com.example.uberforhotels.HotelProfileActivity;
 import com.example.uberforhotels.Other.DBHelper;
 import com.example.uberforhotels.Other.Helper;
+import com.example.uberforhotels.Other.HotelSinglton;
 import com.example.uberforhotels.R;
 import com.example.uberforhotels.models.Hotel;
 import com.google.firebase.FirebaseNetworkException;
@@ -76,7 +77,8 @@ public class HotelSignupActivity extends AppCompatActivity {
                 }else {
                     auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
                         if(task.isSuccessful()) {
-                            DBHelper.addHotel(new Hotel(id, name, email, "", true, null));
+                            Hotel hotel = new Hotel(id, name, email, "", true, null, 0, 0);
+                            DBHelper.addHotel(hotel);
                             Helper.toast(getApplicationContext(), "User added");
                             loader.setVisibility(View.INVISIBLE);
                             prefs.edit().putBoolean("isHotel", true).apply();
@@ -86,6 +88,9 @@ public class HotelSignupActivity extends AppCompatActivity {
                             Helper.setHotelMailInPrefs(email, getApplicationContext());
                             Helper.setHotelOpenInPrefs(true, getApplicationContext());
                             Helper.setPrefsCoverImgUrl("", getApplicationContext());
+
+                            HotelSinglton.setHotel(hotel);
+
                             Helper.LounchActivity(HotelSignupActivity.this, HotelProfileActivity.class);
                             finish();
                         }else {

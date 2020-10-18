@@ -4,17 +4,20 @@ public class Hotel {
     String id, hotel_name, email, imageUrl;
     boolean hotelOpen;
     Address address;
+    float averageRating;
+    int numberOfUserRating;
 
     public Hotel(){}
 
-    public Hotel(String id, String hotel_name, String email, String imageUrl, boolean hotelOpen, Address address) {
+    public Hotel(String id, String hotel_name, String email, String imageUrl, boolean hotelOpen, Address address, float averageRating, int numberOfUserRating) {
         this.id = id;
         this.hotel_name = hotel_name;
         this.email = email;
         this.imageUrl = imageUrl;
         this.hotelOpen = hotelOpen;
         this.address = address;
-
+        this.averageRating = averageRating;
+        this.numberOfUserRating = numberOfUserRating;
     }
 
     public String getImageUrl() {
@@ -61,5 +64,21 @@ public class Hotel {
 
     public void setHotelOpen(boolean hotelOpen) {
         this.hotelOpen = hotelOpen;
+    }
+
+    public float getAverageRating() {
+        return averageRating;
+    }
+
+    public void setAverageRating(float averageRating) {
+        this.averageRating = averageRating;
+    }
+
+    public int getNumberOfUserRating() {
+        return numberOfUserRating;
+    }
+
+    public void setNumberOfUserRating(int numberOfUserRating) {
+        this.numberOfUserRating = numberOfUserRating;
     }
 }

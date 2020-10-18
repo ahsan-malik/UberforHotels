@@ -84,7 +84,7 @@ public class UserSelectRoom extends Fragment {
         Location.distanceBetween(UserPrefs.getLat(getContext()), UserPrefs.getLng(getContext()), hotel.getAddress().getLat(),
                 hotel.getAddress().getLng(), straightDistance);
 
-        Picasso.get().load(hotel.getImageUrl()).into(backImg);
+        if (!hotel.getImageUrl().equals("")) Picasso.get().load(hotel.getImageUrl()).into(backImg);
         hotelName.setText(hotel.getHotel_name());
         address.setText(hotel.getAddress().getAddressLine());
         distance.setText("Distance " + String.format("%.1f", straightDistance[0]/1000) + " km");
@@ -102,13 +102,13 @@ public class UserSelectRoom extends Fragment {
                             continue;
                         else rooms.add(dataSnapshot.getValue(Room.class));
                     }
-                    roomRecyclerView.setAdapter(new UserRoomAdapter(rooms));
-                }
+                }else Helper.toast(getContext(), "no room available");
+                roomRecyclerView.setAdapter(new UserRoomAdapter(rooms, hotel.getId()));
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Helper.toast(getContext(), error.getMessage());
             }
         });
     }
