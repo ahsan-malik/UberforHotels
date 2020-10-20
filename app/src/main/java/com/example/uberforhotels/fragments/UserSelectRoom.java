@@ -93,7 +93,7 @@ public class UserSelectRoom extends Fragment {
     @SuppressLint({"SetTextI18n", "DefaultLocale"})
     void fillUI() {
 
-        ratingText.setText(String.format("%.1f", hotel.getAverageRating()/hotel.getNumberOfUserRating()));
+        ratingText.setText(String.format("%.1f", hotel.getAverageRating()));
         ratingNum.setText("(" + hotel.getNumberOfUserRating() + ")");
 
         float[] straightDistance = new float[1];
@@ -158,7 +158,7 @@ public class UserSelectRoom extends Fragment {
             hotel.setNumberOfUserRating(hotel.getNumberOfUserRating() + 1);
             hotel.setAverageRating((hotel.getAverageRating() + smileyRating.getSelectedSmiley().getRating()));
 
-            ratingText.setText(String.format("%.1f", hotel.getAverageRating()/hotel.getNumberOfUserRating()));
+            ratingText.setText(String.format("%.1f", hotel.getAverageRating()));
             ratingNum.setText("(" + hotel.getNumberOfUserRating() + ")");
 
 

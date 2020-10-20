@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -54,7 +53,7 @@ public class UserHomeAdapter extends RecyclerView.Adapter<UserHomeAdapter.ViewHo
 
         Hotel hotel = hotels.get(position);
 
-        holder.ratingText.setText(String.format("%.1f", hotel.getAverageRating()/hotel.getNumberOfUserRating()));
+        holder.ratingText.setText(String.format("%.1f", hotel.getAverageRating()));
         holder.ratingNum.setText("(" + hotel.getNumberOfUserRating() + ")");
 
         holder.name.setText(hotel.getHotel_name());
@@ -79,8 +78,6 @@ public class UserHomeAdapter extends RecyclerView.Adapter<UserHomeAdapter.ViewHo
         ImageView img;
         @BindView(R.id.distance)
         TextView distance;
-        @BindView(R.id.ratingStar)
-        RatingBar ratingStar;
         @BindView(R.id.ratingText)
         TextView ratingText;
         @BindView(R.id.ratingNum)

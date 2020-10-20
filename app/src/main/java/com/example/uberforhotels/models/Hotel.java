@@ -67,7 +67,7 @@ public class Hotel {
     }
 
     public float getAverageRating() {
-        return averageRating;
+        return averageRating/numberOfUserRating;
     }
 
     public void setAverageRating(float averageRating) {
